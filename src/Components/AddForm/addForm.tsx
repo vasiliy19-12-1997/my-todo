@@ -3,7 +3,11 @@ import { Input } from "../../Styles/UI/Input/input";
 import { Button } from "../../Styles/UI/Button/button";
 import { CheckBox } from "../../Styles/UI/CheckBox/checkBox";
 import s from "./addForm.module.scss";
-export const AddForm: FC = () => {
+import { ITodo } from "../../Types/types";
+interface IAddForm {
+  todo: ITodo[];
+}
+export const AddForm: FC<IAddForm> = ({ todo }) => {
   return (
     <div className={s.AddForm}>
       <Input />
