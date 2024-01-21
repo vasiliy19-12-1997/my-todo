@@ -1,16 +1,16 @@
 import { useState } from "react";
-import "./App.scss";
-import { AddForm } from "./Components/AddForm/addForm";
-import { ITodo } from "./Types/types";
-import { Button } from "./Styles/UI/Button/button";
-import { Input } from "./Styles/UI/Input/input";
 import { v4 as uuidv4 } from "uuid";
+import "./App.scss";
+import { Button } from "./Styles/UI/Button/button";
 import { CheckBox } from "./Styles/UI/CheckBox/checkBox";
+import { Input } from "./Styles/UI/Input/input";
+import { ITodo } from "./Types/types";
 
 function App() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isCompleted, setIsCompleted] = useState(false);
+  const [isToggle, setIsToggle] = useState(false);
   const [todos, setTodos] = useState<ITodo[]>([
     {
       title: "Hello world",
@@ -32,34 +32,50 @@ function App() {
       id: uuidv4(),
       isCompleted: false,
     };
-    const a = [...todos, todo];
-    setTodos(a);
+    setTodos([...todos, todo]);
     setTitle("");
     setDescription("");
-    toggleTodo();
   };
-  console.log(todos);
-  const toggleTodo = () => {
+
+  const deleteTodos = (id: string) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+  const toggleTodos = () => {
     setIsCompleted(!isCompleted);
   };
+  const editTitle = (e: React.FocusEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+  console.log(todos);
+
   return (
-    <div className="App">
-      {/* <AddForm todo={todos} /> */}
-      <Button onClick={addTodo} butText="add todo" />
-      <Input value={title} onChange={(e) => setTitle(e.target.value)} />
-      <Input
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <CheckBox onClick={toggleTodo} />
-      {todos.map((todo) => (
-        <div key={todo.id}>
-          {todo.title}
-          {todo.description}
-          {todo.isCompleted}
-        </div>
-      ))}
-    </div>
+    <>
+      <Button butText="modal window" onClick={() => setIsToggle(!isToggle)} />
+      {isToggle && <div>1</div>}
+      <div className="App">
+        {/* <AddForm todo={todos} /> */}
+        <Button onClick={addTodo} butText="add todo" />
+        <Input value={title} onChange={(e) => setTitle(e.target.value)} />
+        <Input
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+
+        {todos.map((todo) => (
+          <div key={todo.id}>
+            {todo.title}
+            {todo.description}
+
+            <Button
+              butText="delete todo"
+              onClick={() => deleteTodos(todo.id)}
+            />
+            <Button butText="edit title" onClick={editTitle} />
+            <CheckBox onClick={toggleTodos} />
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 
