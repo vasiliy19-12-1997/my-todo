@@ -5,6 +5,9 @@ import { Button } from "./Styles/UI/Button/button";
 import { CheckBox } from "./Styles/UI/CheckBox/checkBox";
 import { Input } from "./Styles/UI/Input/input";
 import { ITodo } from "./Types/types";
+import { AddForm } from "./Components/AddForm/addForm";
+import { TodoItem } from "./Components/TodoItem/todoItem";
+import { TodoList } from "./Components/TodoList/todoList";
 
 function App() {
   const [title, setTitle] = useState("");
@@ -43,9 +46,13 @@ function App() {
   const toggleTodos = () => {
     setIsCompleted(!isCompleted);
   };
-  const editTitle = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
+  const handleDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDescription(e.target.value);
+  };
+
   console.log(todos);
 
   return (
@@ -53,27 +60,19 @@ function App() {
       <Button butText="modal window" onClick={() => setIsToggle(!isToggle)} />
       {isToggle && <div>1</div>}
       <div className="App">
-        {/* <AddForm todo={todos} /> */}
-        <Button onClick={addTodo} butText="add todo" />
-        <Input value={title} onChange={(e) => setTitle(e.target.value)} />
-        <Input
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+        <AddForm
+          todo={todos}
+          addTodo={addTodo}
+          title={title}
+          description={description}
+          handleTitle={handleTitle}
+          handleDescription={handleDescription}
         />
-
-        {todos.map((todo) => (
-          <div key={todo.id}>
-            {todo.title}
-            {todo.description}
-
-            <Button
-              butText="delete todo"
-              onClick={() => deleteTodos(todo.id)}
-            />
-            <Button butText="edit title" onClick={editTitle} />
-            <CheckBox onClick={toggleTodos} />
-          </div>
-        ))}
+        <TodoList
+          todos={todos}
+          deleteTodos={deleteTodos}
+          toggleTodos={toggleTodos}
+        />
       </div>
     </>
   );
