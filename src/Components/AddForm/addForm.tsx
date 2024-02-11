@@ -21,9 +21,8 @@ export const AddForm: FC<IAddForm> = ({
 }) => {
   return (
     <div className={s.AddForm}>
-      <Button onClick={addTodo} butText="add todo" />
-      <Input value={title} onChange={handleTitle} />
-      <Input value={description} onChange={handleDescription} />
+      <Input value={title} onChange={handleTitle} placeholder="Write toDo..." />
+      <Button onClick={addTodo} butText="ADD YOUR THING" />
     </div>
   );
 };

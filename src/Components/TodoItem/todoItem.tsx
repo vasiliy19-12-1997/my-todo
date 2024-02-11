@@ -1,10 +1,11 @@
 import { FC } from "react";
 import { Button } from "../../Styles/UI/Button/button";
 import { CheckBox } from "../../Styles/UI/CheckBox/checkBox";
+
 interface ITodoItemProps {
   id: string;
-  deleteTodos: (id: string) => void;
   toggleTodos: () => void;
+  deleteTodos: (id: string) => void;
 }
 export const TodoItem: FC<ITodoItemProps> = ({
   deleteTodos,
@@ -13,8 +14,10 @@ export const TodoItem: FC<ITodoItemProps> = ({
 }) => {
   return (
     <div>
-      <Button butText="delete todo" onClick={() => deleteTodos(id)} />
-      <CheckBox onClick={toggleTodos} />
+      <Button butText="Delete ToDo" onClick={() => deleteTodos(id)} />
+      <div>
+        <CheckBox onClick={toggleTodos} />
+      </div>
     </div>
   );
 };

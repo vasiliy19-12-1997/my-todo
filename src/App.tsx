@@ -1,14 +1,10 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import "./App.scss";
-import { Button } from "./Styles/UI/Button/button";
-import { CheckBox } from "./Styles/UI/CheckBox/checkBox";
-import { Input } from "./Styles/UI/Input/input";
-import { ITodo } from "./Types/types";
+import plus from "../src/Assets/Images/plus.svg";
+import s from "./App.module.scss";
 import { AddForm } from "./Components/AddForm/addForm";
-import { TodoItem } from "./Components/TodoItem/todoItem";
 import { TodoList } from "./Components/TodoList/todoList";
-
+import { ITodo } from "./Types/types";
 function App() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -57,9 +53,11 @@ function App() {
 
   return (
     <>
-      <Button butText="modal window" onClick={() => setIsToggle(!isToggle)} />
-      {isToggle && <div>1</div>}
-      <div className="App">
+      <button onClick={() => setIsToggle(!isToggle)} className={s.ModalWindow}>
+        <img src={plus} alt="add ToDo" width={50} height={50} />
+      </button>
+
+      {isToggle && (
         <AddForm
           todo={todos}
           addTodo={addTodo}
@@ -68,6 +66,8 @@ function App() {
           handleTitle={handleTitle}
           handleDescription={handleDescription}
         />
+      )}
+      <div className={s.App}>
         <TodoList
           todos={todos}
           deleteTodos={deleteTodos}
